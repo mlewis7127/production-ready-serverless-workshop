@@ -10,6 +10,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
+            - run: aws sts assume-role --role-arn $DEPLOYER_ARN --role-session-name ci-deploy
             - run: npm ci
             - run: npm run test # run our integration tests
   deploy:
@@ -28,6 +29,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
+            - run: aws sts assume-role --role-arn $DEPLOYER_ARN --role-session-name ci-deploy
             - run: npm run acceptance
 
 workflows:
