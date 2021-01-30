@@ -5,7 +5,7 @@ orbs:
 jobs:
   integration-test:
     docker:
-      - image: circleci/node
+      - image: circleci/node:14
     steps:
       - checkout
       - node/with-cache:
@@ -14,7 +14,7 @@ jobs:
             - run: npm run test # run our integration tests
   deploy:
     docker:
-      - image: circleci/node
+      - image: circleci/node:14
     steps:
       - checkout
       - node/with-cache:
@@ -22,7 +22,7 @@ jobs:
             - run: npm run sls -- deploy
   acceptance-test:
     docker:
-      - image: circleci/node
+      - image: circleci/node:14
     steps:
       - checkout
       - node/with-cache:
