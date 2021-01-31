@@ -19,7 +19,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run: npm run sls -- deploy
+            - run: npm run sls -- deploy # deploy application
   acceptance-test:
     docker:
       - image: circleci/node:14
@@ -27,7 +27,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run: npm run acceptance
+            - run: npm run acceptance # run our acceptance tests
 
 workflows:
    version: 2
