@@ -48,5 +48,6 @@ module.exports.handler = middy(async (event, context) => {
   names: {
     secretString: `/${serviceName}/${stage}/search-restaurants/secretString`
   },
-  setToContext: true
+  setToContext: true,
+  throwOnFailedCall: true
 }))
