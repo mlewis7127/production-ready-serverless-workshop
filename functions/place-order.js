@@ -1,7 +1,8 @@
 const Log = require('@dazn/lambda-powertools-logger')
 const wrap = require('@dazn/lambda-powertools-pattern-basic')
 const EventBridge = require('aws-sdk/clients/eventbridge')
-const eventBridge = new EventBridge()
+const XRay = require('aws-xray-sdk-core')
+const eventBridge = XRay.captureAWSClient(new EventBridge())
 const chance = require('chance').Chance()
 
 const busName = process.env.bus_name

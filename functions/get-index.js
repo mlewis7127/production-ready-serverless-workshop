@@ -6,6 +6,11 @@ const http = require('axios')
 const aws4 = require('aws4')
 const URL = require('url')
 
+const AWSXRay = require('aws-xray-sdk-core')
+AWSXRay.captureHTTPsGlobal(require('https'))
+
+const CorrelationIds = require('@dazn/lambda-powertools-correlation-ids')
+
 const restaurantsApiRoot = process.env.restaurants_api
 const ordersApiRoot = process.env.orders_api
 const cognitoUserPoolId = process.env.cognito_user_pool_id
@@ -27,7 +32,7 @@ const getRestaurants = async () => {
   aws4.sign(opts)
 
   const httpReq = http.get(restaurantsApiRoot, {
-    headers: opts.headers
+    headers: Object.assign({}, opts.headers, CorrelationIds.get())
   })
   return (await httpReq).data
 }

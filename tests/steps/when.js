@@ -23,7 +23,7 @@ const viaEventBridge = async (busName, source, detailType, detail) => {
 const viaHandler = async (event, functionName) => {
   const handler = require(`${APP_ROOT}/functions/${functionName}`).handler
 
-  const context = {}
+  const context = { awsRequestId: 'test' }
   const response = await handler(event, context)
   const contentType = _.get(response, 'headers.content-type', 'application/json');
   if (_.get(response, 'body') && contentType === 'application/json') {

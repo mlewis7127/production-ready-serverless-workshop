@@ -7,15 +7,27 @@ custom:
   logLevel:
     prod: ERROR
     default: INFO
+  serverless-iam-roles-per-function:
+    defaultInherit: true
 
 provider:
   name: aws
   runtime: nodejs12.x
+  tracing:
+    apiGateway: true
+    lambda: true
   environment:
     serviceName: ${self:service}
     stage: ${self:custom.stage}
     LOG_LEVEL: ${self:custom.logLevel.${self:custom.stage}, self:custom.logLevel.default}
     SAMPLE_DEBUG_LOG_RATE: 0.1
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - "xray:PutTraceSegments"
+      - "xray:PutTelemetryRecords"
+    Resource: "*"
 
 functions:
   get-index:
